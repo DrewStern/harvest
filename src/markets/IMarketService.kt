@@ -11,7 +11,8 @@ interface IMarketService {
 //    fun deleteContract(contractId: Int)
 //    fun acceptContract(contractId: Int)
 //    fun declineContract(contractId: Int)
+    fun findOpenContracts(): List<Contract>
     fun findOpenContractsNearby(user: User, range: Long): List<Contract>
-    fun findOpenContractsDuringTimeframe(start: Date, end: Date): List<Contract>
+    fun findOpenContractsDuringDateRange(start: Date, end: Date): List<Contract>
     fun createReview(review: Review)
 }

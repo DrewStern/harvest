@@ -1,7 +1,7 @@
-package stocks
+package harvests
 
 // alphabetical order
-enum class GameType {
+enum class HarvestType {
     Cattle,
     Bison,
     Deer,

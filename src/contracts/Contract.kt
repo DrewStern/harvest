@@ -1,5 +1,6 @@
 package contracts
 
+import harvests.Harvest
 import tools.DateTimeRange
 import locations.Land
 import users.User
@@ -10,7 +11,9 @@ data class Contract(
     val seller: User,
     val buyer: User,
     val price: Long,
+
     val location: Land,
+    val harvest: Harvest,
 
     val posted: Date,
     val closed: Date,

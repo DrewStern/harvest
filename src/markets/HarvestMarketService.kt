@@ -6,7 +6,7 @@ import locations.Geolocation
 import locations.IGeolocationService
 import reviews.IReviewService
 import reviews.Review
-import stocks.IStockService
+import harvests.IHarvestService
 import users.IUserService
 import users.User
 import java.time.LocalDateTime
@@ -14,16 +14,16 @@ import java.time.ZoneOffset
 import java.util.*
 
 class HarvestMarketService : IMarketService {
-    var contractService: IContractService
-    var reviewService: IReviewService
-    var geolocationService: IGeolocationService
+    private val contractService: IContractService
+    private val reviewService: IReviewService
+    private val geolocationService: IGeolocationService
 
     constructor(
         userService: IUserService,
         contractService: IContractService,
         reviewService: IReviewService,
         geolocationService: IGeolocationService,
-        stockService: IStockService
+        harvestService: IHarvestService
     ) {
         this.contractService = contractService
         this.reviewService = reviewService
@@ -38,25 +38,34 @@ class HarvestMarketService : IMarketService {
         reviewService.postReview(review)
     }
 
-    override fun findOpenContractsNearby(user: User, range: Long): List<Contract> {
-        val userGeolocation = geolocationService.getGeolocationOfUser(user);
-        return contractService.getContracts().filter { contract -> isWithinUsersRange(contract, userGeolocation, range) }
+    override fun findOpenContracts(): List<Contract> {
+        return contractService.getContracts().filter { contract -> !isClosedOrExpired(contract) }
     }
 
-    override fun findOpenContractsDuringTimeframe(start: Date, end: Date): List<Contract> {
+    override fun findOpenContractsNearby(user: User, range: Long): List<Contract> {
+        val userGeolocation = geolocationService.getGeolocationOfUser(user);
+        return contractService.getContracts().filter { contract -> isContractWithinUsersRange(contract, userGeolocation, range) }
+    }
+
+    override fun findOpenContractsDuringDateRange(start: Date, end: Date): List<Contract> {
         return contractService.getContracts().filter { contract -> !isClosedOrExpired(contract) }
     }
 
     // TODO: this algorithm sucks but will get switched out for something better eventually
-    private fun isWithinUsersRange(contract: Contract, userGeolocation: Geolocation, range: Long): Boolean {
-        val usersMaxLatitudeRange = userGeolocation.latitude + range
-        val usersMinLatitudeRange = userGeolocation.latitude - range
-        val usersMaxLongitudeRange = userGeolocation.longitude + range
-        val usersMinLongitudeRange = userGeolocation.longitude - range
-        return contract.location.bounds.any { geolocation ->
-            usersMinLatitudeRange <= geolocation.latitude && geolocation.latitude <= usersMaxLatitudeRange &&
-            usersMinLongitudeRange <= geolocation.longitude && geolocation.longitude <= usersMaxLongitudeRange
-        }
+    private fun isContractWithinUsersRange(contract: Contract, userGeolocation: Geolocation, range: Long): Boolean {
+        return contract.location.bounds.any { contractGeolocation -> isWithinRange(userGeolocation, contractGeolocation, range) }
+    }
+
+    private fun isWithinRange(source: Geolocation, target: Geolocation, range: Long): Boolean {
+        val maxLatitudeRange = source.latitude + range
+        val minLatitudeRange = source.latitude - range
+        val latitudeRange = minLatitudeRange..maxLatitudeRange
+
+        val maxLongitudeRange = source.longitude + range
+        val minLongitudeRange = source.longitude - range
+        val longitudeRange = minLongitudeRange..maxLongitudeRange
+
+        return target.latitude in latitudeRange && target.longitude in longitudeRange
     }
 
     // TODO: this algorithm sucks but will get switched out for something better eventually

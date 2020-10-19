@@ -8,5 +8,5 @@ data class User(
     val firstName: String,
     val lastName: String,
     val timezone: TimeZone,
-    val lands: List<Land>
+    val lands: List<Land>?
 )

@@ -1,5 +1,7 @@
 package contracts
 
+import harvests.Harvest
+import harvests.HarvestType
 import locations.Geolocation
 import locations.Land
 import tools.DateTimeRange
@@ -17,12 +19,13 @@ class ContractService: IContractService {
         val fakeBounds = emptyList<Geolocation>()
         val fakePrice = Long.MAX_VALUE
         val fakeLand = Land(1, fakeSeller, fakeBounds, 100)
+        val fakeHarvest = Harvest(HarvestType.Deer, 2);
         val fakePosted = Date()
         val fakeClosed = Date()
         val fakeExpiration = Date()
         val fakeTimeframe = DateTimeRange(fakePosted, fakeExpiration)
         val fakeContract = Contract(
-            fakeId, fakeSeller, fakeBuyer, fakePrice, fakeLand, fakePosted, fakeClosed, fakeExpiration, fakeTimeframe)
+            fakeId, fakeSeller, fakeBuyer, fakePrice, fakeLand, fakeHarvest, fakePosted, fakeClosed, fakeExpiration, fakeTimeframe)
         return mutableListOf(fakeContract)
     }
 

@@ -1,7 +1,7 @@
-package stocks
+package harvests
 
-interface IStockService {
-    fun getProofOfStock(): Stock
+interface IHarvestService {
+    fun getProofOfStock(): Harvest
 //    fun postProofOfStock(stock: Stock)
 //    fun postRemovalOfStock(stock: Stock)
 }
