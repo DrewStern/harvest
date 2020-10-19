@@ -5,7 +5,6 @@ import contracts.*
 class ContractServiceTest {
     @Before
 
-
     @Test
     fun givenNothing_whenContractsAreQueried_thenAllAreFound() {
         val fakeId = 1

@@ -6,7 +6,6 @@ import stocks.StockService
 import users.UserService
 import java.sql.Date
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 fun main() {
     // TODO: DI done right using some fancy technology

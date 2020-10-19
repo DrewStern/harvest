@@ -5,6 +5,7 @@ enum class GameType {
     Cattle,
     Bison,
     Deer,
+    Elk,
     Exotic,
     Turkey,
 }

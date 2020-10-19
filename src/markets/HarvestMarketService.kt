@@ -5,6 +5,7 @@ import contracts.IContractService
 import locations.Geolocation
 import locations.IGeolocationService
 import reviews.IReviewService
+import reviews.Review
 import stocks.IStockService
 import users.IUserService
 import users.User
@@ -14,6 +15,7 @@ import java.util.*
 
 class HarvestMarketService : IMarketService {
     var contractService: IContractService
+    var reviewService: IReviewService
     var geolocationService: IGeolocationService
 
     constructor(
@@ -24,7 +26,16 @@ class HarvestMarketService : IMarketService {
         stockService: IStockService
     ) {
         this.contractService = contractService
+        this.reviewService = reviewService
         this.geolocationService = geolocationService
+    }
+
+    override fun createContract(contract: Contract) {
+        contractService.postContract(contract)
+    }
+
+    override fun createReview(review: Review) {
+        reviewService.postReview(review)
     }
 
     override fun findOpenContractsNearby(user: User, range: Long): List<Contract> {
