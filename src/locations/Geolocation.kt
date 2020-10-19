@@ -1,7 +1,7 @@
 package locations
 
 data class Geolocation(
-    val latitude: Number,
-    val longitude: Number,
-    val tolerance: Number
+    val latitude: Long,
+    val longitude: Long,
+    val tolerance: Long
 )

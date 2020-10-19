@@ -12,6 +12,7 @@ data class Contract(
     val location: Land,
 
     val posted: Date,
-    val executed: DateTimeInterval,
-    val closed: Date
+    val closed: Date,
+    val expiration: Date,
+    val timeframe: DateTimeInterval
 )
