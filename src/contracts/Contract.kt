@@ -2,7 +2,7 @@ package contracts
 
 import harvests.Harvest
 import tools.DateTimeRange
-import locations.Land
+import properties.Property
 import users.User
 import java.util.*
 
@@ -12,7 +12,7 @@ data class Contract(
     val buyer: User,
     val price: Long,
 
-    val location: Land,
+    val location: Property,
     val harvest: Harvest,
 
     val posted: Date,

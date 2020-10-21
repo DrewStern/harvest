@@ -7,5 +7,6 @@ enum class HarvestType {
     Deer,
     Elk,
     Exotic,
+    Human,
     Turkey,
 }

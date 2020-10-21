@@ -7,6 +7,7 @@ import locations.IGeolocationService
 import reviews.IReviewService
 import reviews.Review
 import harvests.IHarvestService
+import tools.DateTimeRange
 import users.IUserService
 import users.User
 import java.time.LocalDateTime
@@ -39,7 +40,7 @@ class HarvestMarketService : IMarketService {
     }
 
     override fun findOpenContracts(): List<Contract> {
-        return contractService.getContracts().filter { contract -> !isClosedOrExpired(contract) }
+        return contractService.getContracts().filter { contract -> isOpen(contract) }
     }
 
     override fun findOpenContractsNearby(user: User, range: Long): List<Contract> {
@@ -48,7 +49,11 @@ class HarvestMarketService : IMarketService {
     }
 
     override fun findOpenContractsDuringDateRange(start: Date, end: Date): List<Contract> {
-        return contractService.getContracts().filter { contract -> !isClosedOrExpired(contract) }
+        return findOpenContracts().filter { contract -> isContractWithinUserDateRange(contract, DateTimeRange(start, end))  }
+    }
+
+    private fun isContractWithinUserDateRange(contract: Contract, userRange: DateTimeRange): Boolean {
+        return userRange.start.before(contract.fulfillment.start) && userRange.end.after(contract.fulfillment.end)
     }
 
     // TODO: this algorithm sucks but will get switched out for something better eventually
@@ -57,15 +62,13 @@ class HarvestMarketService : IMarketService {
     }
 
     private fun isWithinRange(source: Geolocation, target: Geolocation, range: Long): Boolean {
-        val maxLatitudeRange = source.latitude + range
-        val minLatitudeRange = source.latitude - range
-        val latitudeRange = minLatitudeRange..maxLatitudeRange
-
-        val maxLongitudeRange = source.longitude + range
-        val minLongitudeRange = source.longitude - range
-        val longitudeRange = minLongitudeRange..maxLongitudeRange
-
+        val latitudeRange = (source.latitude - range).rangeTo(source.latitude + range)
+        val longitudeRange = (source.longitude - range).rangeTo(source.longitude + range)
         return target.latitude in latitudeRange && target.longitude in longitudeRange
+    }
+
+    private fun isOpen(contract: Contract): Boolean {
+        return !isClosedOrExpired(contract)
     }
 
     // TODO: this algorithm sucks but will get switched out for something better eventually

@@ -1,6 +1,5 @@
 package locations
 
-import contracts.Contract
 import users.User
 
 interface IGeolocationService {

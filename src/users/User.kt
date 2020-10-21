@@ -1,6 +1,6 @@
 package users
 
-import locations.Land
+import properties.Property
 import java.util.*
 
 data class User(
@@ -8,5 +8,14 @@ data class User(
     val firstName: String,
     val lastName: String,
     val timezone: TimeZone,
-    val lands: List<Land>?
+    val properties: List<Property>?,
+    val role: Privilege
 )
+
+// alphabetical order
+enum class Privilege {
+    Admin,
+    Consumer,
+    Guest,
+    Provider
+}
