@@ -1,36 +1,49 @@
 package contracts
 
-import harvests.Harvest
-import harvests.HarvestType
-import locations.Geolocation
-import properties.Property
-import tools.DateTimeRange
-import users.Privilege
-import users.User
-import java.util.*
-
 class ContractService: IContractService {
-    var openContracts = mutableListOf<Contract>()
+    private val repository: ContractRepository
 
+    constructor(repository: ContractRepository) {
+        this.repository = repository
+    }
 
     override fun getContracts(): List<Contract> {
-        val fakeId = 1
-        val fakeSeller = User(1, "Drew", "Stern", TimeZone.getDefault(), emptyList(), Privilege.Admin)
-        val fakeBuyer = User(2, "Jon", "Bargiel", TimeZone.getDefault(), emptyList(), Privilege.Guest)
-        val fakeBounds = emptyList<Geolocation>()
-        val fakePrice = Long.MAX_VALUE
-        val fakeLand = Property(1, fakeSeller, fakeBounds, 100)
-        val fakeHarvest = Harvest(HarvestType.Deer, 2);
-        val fakePosted = Date()
-        val fakeClosed = Date()
-        val fakeExpiration = Date()
-        val fakeTimeframe = DateTimeRange(fakePosted, fakeExpiration)
-        val fakeContract = Contract(
-            fakeId, fakeSeller, fakeBuyer, fakePrice, fakeLand, fakeHarvest, fakePosted, fakeClosed, fakeExpiration, fakeTimeframe)
-        return mutableListOf(fakeContract)
+        return repository.find()
     }
 
     override fun postContract(contract: Contract) {
-        openContracts.add(contract)
+        if (canBePosted(contract)) {
+            repository.save(contract, ContractStage.Posted)
+        }
+    }
+
+    // TODO: need to check that the contract is still open
+    override fun acceptContract(contract: Contract) {
+        if (canBeAccepted(contract)) {
+            repository.save(contract, ContractStage.Accepted)
+        }
+    }
+
+    // TODO: need to check that the contract is still open
+    override fun rescindContract(contract: Contract) {
+        if (canBeRescinded(contract)) {
+            repository.save(contract, ContractStage.Rescinded)
+        }
+    }
+
+    private fun canBePosted(contract: Contract): Boolean {
+        return validate(contract) && contract.seller.equals(contract.estate.owner)
+    }
+
+    private fun canBeAccepted(contract: Contract): Boolean {
+        return validate(contract) && !contract.seller.equals(contract.buyer) && contract.stage.equals(ContractStage.Posted)
+    }
+
+    private fun canBeRescinded(contract: Contract): Boolean {
+        return validate(contract) && contract.seller.equals(contract.buyer) && contract.stage.equals(ContractStage.Posted)
+    }
+
+    private fun validate(contract: Contract): Boolean {
+        return contract.id > 0 && contract.price > 0
     }
 }

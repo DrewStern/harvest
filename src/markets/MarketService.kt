@@ -14,7 +14,7 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.util.*
 
-class HarvestMarketService : IMarketService {
+class MarketService : IMarketService {
     private val contractService: IContractService
     private val reviewService: IReviewService
     private val geolocationService: IGeolocationService
@@ -45,7 +45,7 @@ class HarvestMarketService : IMarketService {
 
     override fun findOpenContractsNearby(user: User, range: Long): List<Contract> {
         val userGeolocation = geolocationService.getGeolocationOfUser(user);
-        return contractService.getContracts().filter { contract -> isContractWithinUsersRange(contract, userGeolocation, range) }
+        return findOpenContracts().filter { contract -> isContractWithinUsersRange(contract, userGeolocation, range) }
     }
 
     override fun findOpenContractsDuringDateRange(start: Date, end: Date): List<Contract> {
@@ -58,7 +58,7 @@ class HarvestMarketService : IMarketService {
 
     // TODO: this algorithm sucks but will get switched out for something better eventually
     private fun isContractWithinUsersRange(contract: Contract, userGeolocation: Geolocation, range: Long): Boolean {
-        return contract.location.bounds.any { contractGeolocation -> isWithinRange(userGeolocation, contractGeolocation, range) }
+        return contract.estate.bounds.any { contractGeolocation -> isWithinRange(userGeolocation, contractGeolocation, range) }
     }
 
     private fun isWithinRange(source: Geolocation, target: Geolocation, range: Long): Boolean {

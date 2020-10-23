@@ -7,5 +7,6 @@ data class Review(
     val id: Int,
     val contract: Contract,
     val posted: Date,
-    val content: String
+    val text: String,
+    val score: Int
 )

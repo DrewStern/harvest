@@ -1,7 +1,13 @@
 package users
 
 class UserService: IUserService {
+    private val repository: UserRepository
+
+    constructor(repository: UserRepository) {
+        this.repository = repository
+    }
+
     override fun getUsers(): List<User> {
-        return emptyList();
+        return repository.find()
     }
 }

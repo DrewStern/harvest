@@ -1,13 +1,44 @@
 package contracts.tests
 
-import contracts.*
+import contracts.Contract
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class ContractServiceTest {
-    @Before
 
     @Test
-    fun givenNothing_whenContractsAreQueried_thenAllAreFound() {
-        val expected = ContractServiceTestDataFactory.getBasicTestData()
-        val actual = fakeContract
-    }
+    fun givenEmptyRepository_whenContractsAreQueried_thenNothingIsFound() {}
+
+    @Test
+    fun givenNonEmptyRepository_whenContractsAreQueried_thenAllAreFound() {}
+
+    @Test
+    fun givenInvalidContractId_whenQueriedById_thenNothingIsFound() {}
+
+    @Test
+    fun givenValidContractId_whenQueriedById_thenCorrectContractIsFound() {}
+
+    @Test
+    fun givenValidContract_whenPostedByANonEstateOwner_thenRejectedBySystem() {}
+
+    @Test
+    fun givenValidContract_whenPostedByAnEstateOwner_thenSuccessful() {}
+
+    @Test
+    fun givenPostedContract_whenRescindedTriedByNonOwner_thenFails() {}
+
+    @Test
+    fun givenPostedContract_whenRescindedByEstateOwner_thenSuccessful() {}
+
+    @Test
+    fun givenPostedContract_whenExpires_thenRejectedBySystem() {}
+
+    @Test
+    fun givenPostedContract_whenAcceptedByEstateOwner_thenRejectedBySystem() {}
+
+    @Test
+    fun givenPostedContract_whenAcceptedByAnotherUser_thenSuccessful() {}
+
+    @Test
+    fun givenAcceptedContract_when
 }

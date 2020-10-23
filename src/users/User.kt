@@ -1,6 +1,6 @@
 package users
 
-import properties.Property
+import estates.Estate
 import java.util.*
 
 data class User(
@@ -8,14 +8,9 @@ data class User(
     val firstName: String,
     val lastName: String,
     val timezone: TimeZone,
-    val properties: List<Property>?,
-    val role: Privilege
+    val estates: List<Estate>,
+    val role: Privilege,
+    val email: String,
+    val phone: String
+//    val paymentMethods: List<PaymentMethod>
 )
-
-// alphabetical order
-enum class Privilege {
-    Admin,
-    Consumer,
-    Guest,
-    Provider
-}
