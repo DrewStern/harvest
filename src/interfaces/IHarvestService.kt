@@ -1,4 +1,6 @@
-package harvests
+package interfaces
+
+import harvests.Harvest
 
 interface IHarvestService {
     fun getProofOfStock(): Harvest

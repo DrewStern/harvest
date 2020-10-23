@@ -1,6 +1,7 @@
 package reviews
 
 import contracts.Contract
+import interfaces.IReviewService
 
 class ReviewService: IReviewService {
     private val repository: ReviewRepository

@@ -1,13 +1,21 @@
 package estates
 
-import repositories.Repository
+import bases.Repository
 
 class EstateRepository: Repository<Estate>() {
     override fun find(): List<Estate> {
-        TODO("Not yet implemented")
+        return getFakeEstates()
+    }
+
+    override fun find(id: Int): Estate {
+        return getFakeEstates().first()
     }
 
     override fun save(item: Estate): Boolean {
         TODO("Not yet implemented")
+    }
+
+    private fun getFakeEstates(): List<Estate> {
+        return emptyList()
     }
 }

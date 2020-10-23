@@ -1,4 +1,4 @@
-package locations
+package geolocations
 
 data class Geolocation(
     val latitude: Long,

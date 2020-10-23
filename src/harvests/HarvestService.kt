@@ -1,5 +1,7 @@
 package harvests
 
+import interfaces.IHarvestService
+
 class HarvestService: IHarvestService {
     private val repository: HarvestRepository
 

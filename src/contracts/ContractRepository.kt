@@ -3,8 +3,8 @@ package contracts
 import estates.Estate
 import harvests.Harvest
 import harvests.HarvestType
-import locations.Geolocation
-import repositories.Repository
+import geolocations.Geolocation
+import bases.Repository
 import tools.DateTimeRange
 import users.Privilege
 import users.User
@@ -15,7 +15,7 @@ class ContractRepository: Repository<Contract>() {
         return mutableListOf(getFakeContract())
     }
 
-    fun findById(id: Int): Contract {
+    override fun find(id: Int): Contract {
         return find().filter { contract -> contract.id.equals(id) }.first()
     }
 
@@ -35,7 +35,7 @@ class ContractRepository: Repository<Contract>() {
         val fakeBounds = emptyList<Geolocation>()
         val fakePrice = Long.MAX_VALUE
         val fakeEstate = Estate(1, fakeSeller, fakeBounds, 100)
-        val fakeHarvest = Harvest(HarvestType.Deer, 2)
+        val fakeHarvest = Harvest(1, HarvestType.Deer, 2)
         val fakeStage = ContractStage.Posted
         val fakePosted = Date()
         val fakeClosed = Date()

@@ -1,8 +1,8 @@
 package contracts
 
+import estates.Estate
 import harvests.Harvest
 import tools.DateTimeRange
-import estates.Estate
 import users.User
 import java.util.*
 

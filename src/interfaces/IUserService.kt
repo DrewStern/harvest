@@ -1,4 +1,6 @@
-package users
+package interfaces
+
+import users.User
 
 interface IUserService {
 

@@ -1,4 +1,4 @@
-package messages
+package interfaces
 
 interface IMessageService {
 }

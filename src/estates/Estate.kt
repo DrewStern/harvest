@@ -1,6 +1,6 @@
 package estates
 
-import locations.Geolocation
+import geolocations.Geolocation
 import users.User
 
 data class Estate(

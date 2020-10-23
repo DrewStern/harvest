@@ -1,9 +1,13 @@
 package users
 
-import repositories.Repository
+import bases.Repository
 
 class UserRepository: Repository<User>() {
     override fun find(): List<User> {
+        TODO("Not yet implemented")
+    }
+
+    override fun find(id: Int): User {
         TODO("Not yet implemented")
     }
 

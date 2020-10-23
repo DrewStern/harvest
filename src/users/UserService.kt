@@ -1,5 +1,7 @@
 package users
 
+import interfaces.IUserService
+
 class UserService: IUserService {
     private val repository: UserRepository
 

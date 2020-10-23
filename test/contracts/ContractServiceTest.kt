@@ -7,7 +7,13 @@ import kotlin.test.assertEquals
 class ContractServiceTest {
 
     @Test
-    fun givenEmptyRepository_whenContractsAreQueried_thenNothingIsFound() {}
+    fun givenEmptyRepository_whenContractsAreQueried_thenNothingIsFound() {
+        val given = ConstractService(EmptyContractRepository())
+    }
+
+    private fun EmptyContractRepository() {
+
+    }
 
     @Test
     fun givenNonEmptyRepository_whenContractsAreQueried_thenAllAreFound() {}
@@ -22,23 +28,24 @@ class ContractServiceTest {
     fun givenValidContract_whenPostedByANonEstateOwner_thenRejectedBySystem() {}
 
     @Test
-    fun givenValidContract_whenPostedByAnEstateOwner_thenSuccessful() {}
+    fun givenValidContract_whenPostedByAnEstateOwner_thenAcceptedBySystem() {}
 
     @Test
-    fun givenPostedContract_whenRescindedTriedByNonOwner_thenFails() {}
+    fun givenPostedContract_whenRescindedTriedByNonOwner_thenRejectedBySystem() {}
 
     @Test
-    fun givenPostedContract_whenRescindedByEstateOwner_thenSuccessful() {}
+    fun givenPostedContract_whenRescindedByEstateOwner_thenAcceptedBySystem() {}
 
     @Test
-    fun givenPostedContract_whenExpires_thenRejectedBySystem() {}
+    fun givenPostedContract_whenExpirationDateExceeded_thenRejectedBySystem() {}
 
     @Test
     fun givenPostedContract_whenAcceptedByEstateOwner_thenRejectedBySystem() {}
 
     @Test
-    fun givenPostedContract_whenAcceptedByAnotherUser_thenSuccessful() {}
+    fun givenPostedContract_whenAcceptedByAnotherUser_thenContractBecomesPending() {}
 
+    // TODO: hard to think of use cases when dealing with Pending Contracts - just for accounting basically
     @Test
-    fun givenAcceptedContract_when
+    fun givenPendingContract_whenSomethingHappens_thenDoWhat() {}
 }

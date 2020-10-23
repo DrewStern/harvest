@@ -1,11 +1,16 @@
 import contracts.ContractRepository
 import contracts.ContractService
+import estates.EstateRepository
+import estates.EstateService
 import harvests.HarvestRepository
-import locations.GeolocationService
+import geolocations.GeolocationService
 import markets.MarketService
 import reviews.ReviewService
 import harvests.HarvestService
+import messages.MessageRepository
+import messages.MessageService
 import reviews.ReviewRepository
+import tools.DateTimeService
 import transactions.TransactionRepository
 import transactions.TransactionService
 import users.UserRepository
@@ -15,13 +20,18 @@ import java.time.LocalDate
 
 fun main() {
     // TODO: DI done right using some fancy technology
-    val userService = UserService(UserRepository())
-    val contractService = ContractService(ContractRepository())
-    val reviewService = ReviewService(ReviewRepository())
+    val dateTimeService = DateTimeService()
     val geolocationService = GeolocationService()
+    val userService = UserService(UserRepository())
+
+    val estateService = EstateService(EstateRepository())
     val harvestService = HarvestService(HarvestRepository())
+    val contractService = ContractService(ContractRepository(), estateService, harvestService)
+
     val transactionService = TransactionService(TransactionRepository())
-    val marketService = MarketService(userService, contractService, reviewService, geolocationService, harvestService)
+    val messageService = MessageService(MessageRepository())
+    val reviewService = ReviewService(ReviewRepository())
+    val marketService = MarketService(geolocationService, contractService, reviewService, estateService, dateTimeService)
 
     // TODO: move this to a test package
     val fakeStartDate = Date.valueOf(LocalDate.now().minusYears(1))

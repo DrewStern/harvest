@@ -1,4 +1,4 @@
-package markets
+package interfaces
 
 import contracts.Contract
 import reviews.Review

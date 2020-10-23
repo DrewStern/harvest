@@ -1,13 +1,28 @@
 package estates
 
+import interfaces.IEstateService
 import users.User
 
 class EstateService: IEstateService {
-    override fun getOwnerOfProperty(estate: Estate): User {
+    private val repository: EstateRepository
+
+    constructor(repository: EstateRepository) {
+        this.repository = repository
+    }
+
+    override fun getEstates(): List<Estate> {
+        return repository.find()
+    }
+
+    override fun getEstate(id: Int): Estate {
+        return repository.find(id)
+    }
+
+    override fun getOwnerOfEstate(estate: Estate): User {
         TODO("Not yet implemented")
     }
 
-    override fun postOwnershipOfProperty(user: User, estate: Estate) {
+    override fun postOwnershipOfEstate(user: User, estate: Estate) {
         TODO("Not yet implemented")
     }
 }
