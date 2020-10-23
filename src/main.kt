@@ -1,37 +1,52 @@
-import contracts.ContractRepository
-import contracts.ContractService
-import estates.EstateRepository
-import estates.EstateService
-import harvests.HarvestRepository
-import geolocations.GeolocationService
-import markets.MarketService
-import reviews.ReviewService
-import harvests.HarvestService
-import messages.MessageRepository
-import messages.MessageService
-import reviews.ReviewRepository
-import tools.DateTimeService
-import transactions.TransactionRepository
-import transactions.TransactionService
-import users.UserRepository
-import users.UserService
+import financial.contracts.ContractRepository
+import financial.contracts.ContractService
+import physical.estates.EstateRepository
+import physical.estates.EstateService
+import physical.geolocations.GeolocationRepository
+import physical.harvests.HarvestRepository
+import physical.geolocations.GeolocationService
+import financial.markets.MarketService
+import social.reviews.ReviewService
+import physical.harvests.HarvestService
+import social.messages.MessageRepository
+import social.messages.MessageService
+import social.reviews.ReviewRepository
+import calendars.CalendarService
+import financial.transactions.TransactionRepository
+import financial.transactions.TransactionService
+import social.users.UserRepository
+import social.users.UserService
 import java.sql.Date
 import java.time.LocalDate
 
 fun main() {
     // TODO: DI done right using some fancy technology
-    val dateTimeService = DateTimeService()
-    val geolocationService = GeolocationService()
+    val calendarService = CalendarService()
+    val geolocationService = GeolocationService(GeolocationRepository())
+
     val userService = UserService(UserRepository())
-
     val estateService = EstateService(EstateRepository())
-    val harvestService = HarvestService(HarvestRepository())
-    val contractService = ContractService(ContractRepository(), estateService, harvestService)
+    val harvestService =
+        HarvestService(HarvestRepository())
 
+    val contractService = ContractService(
+        ContractRepository(),
+        estateService,
+        harvestService
+    )
     val transactionService = TransactionService(TransactionRepository())
+    
     val messageService = MessageService(MessageRepository())
     val reviewService = ReviewService(ReviewRepository())
-    val marketService = MarketService(geolocationService, contractService, reviewService, estateService, dateTimeService)
+
+    val marketService = MarketService(
+        calendarService,
+        geolocationService,
+        userService,
+        estateService,
+        contractService,
+        reviewService
+    )
 
     // TODO: move this to a test package
     val fakeStartDate = Date.valueOf(LocalDate.now().minusYears(1))

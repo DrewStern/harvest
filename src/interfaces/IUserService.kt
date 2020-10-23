@@ -1,6 +1,6 @@
 package interfaces
 
-import users.User
+import social.users.User
 
 interface IUserService {
 

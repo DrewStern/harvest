@@ -1,7 +1,7 @@
 package interfaces
 
-import estates.Estate
-import users.User
+import physical.estates.Estate
+import social.users.User
 
 interface IEstateService {
 

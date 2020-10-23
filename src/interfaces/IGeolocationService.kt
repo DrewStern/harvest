@@ -1,7 +1,7 @@
 package interfaces
 
-import geolocations.Geolocation
-import users.User
+import physical.geolocations.Geolocation
+import social.users.User
 
 interface IGeolocationService {
     fun getGeolocationOfUser(user: User): Geolocation

@@ -1,8 +1,8 @@
 package interfaces
 
-import contracts.Contract
-import reviews.Review
-import users.User
+import financial.contracts.Contract
+import social.reviews.Review
+import social.users.User
 import java.util.*
 
 interface IMarketService {

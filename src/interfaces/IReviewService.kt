@@ -1,7 +1,7 @@
 package interfaces
 
-import contracts.Contract
-import reviews.Review
+import financial.contracts.Contract
+import social.reviews.Review
 
 interface IReviewService {
     fun getReviews(contract: Contract): List<Review>

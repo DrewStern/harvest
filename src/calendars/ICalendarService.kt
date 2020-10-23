@@ -1,0 +1,4 @@
+package calendars
+
+interface ICalendarService {
+}

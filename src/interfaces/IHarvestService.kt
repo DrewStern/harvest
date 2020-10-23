@@ -1,6 +1,6 @@
 package interfaces
 
-import harvests.Harvest
+import physical.harvests.Harvest
 
 interface IHarvestService {
     fun getProofOfStock(): Harvest

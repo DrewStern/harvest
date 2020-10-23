@@ -1,6 +1,6 @@
 package interfaces
 
-import contracts.Contract
+import financial.contracts.Contract
 
 interface IContractService {
     fun getContracts(): List<Contract>
