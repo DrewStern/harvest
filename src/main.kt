@@ -9,8 +9,8 @@ import physical.geolocations.GeolocationRepository
 import physical.geolocations.GeolocationService
 import physical.harvests.HarvestRepository
 import physical.harvests.HarvestService
-import social.calendars.CalendarRepository
-import social.calendars.CalendarService
+import core.calendars.CalendarRepository
+import core.calendars.CalendarService
 import social.messages.MessageRepository
 import social.messages.MessageService
 import social.reviews.ReviewRepository

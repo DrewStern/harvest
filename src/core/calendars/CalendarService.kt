@@ -1,4 +1,4 @@
-package social.calendars
+package core.calendars
 
 import core.interfaces.IRepository
 import core.interfaces.ICalendarService

@@ -5,7 +5,7 @@ import core.interfaces.IEstateService
 import core.interfaces.IHarvestService
 import core.interfaces.IRepository
 import physical.estates.Estate
-import social.calendars.DateRange
+import core.calendars.DateRange
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.util.*

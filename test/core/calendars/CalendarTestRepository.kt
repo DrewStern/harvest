@@ -1,9 +1,9 @@
-package social.calendars
+package core.calendars
 
 import core.interfaces.IRepository
 import java.util.*
 
-class CalendarRepository: IRepository<Calendar> {
+class CalendarTestRepository: IRepository<Calendar> {
     override fun find(): List<Calendar> {
         TODO("Not yet implemented")
     }

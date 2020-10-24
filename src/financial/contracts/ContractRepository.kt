@@ -5,7 +5,7 @@ import physical.harvests.Harvest
 import physical.harvests.HarvestType
 import physical.geolocations.Geolocation
 import core.interfaces.IRepository
-import social.calendars.DateRange
+import core.calendars.DateRange
 import social.users.Privilege
 import social.users.User
 import java.util.*

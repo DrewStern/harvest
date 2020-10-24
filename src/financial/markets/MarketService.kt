@@ -3,7 +3,7 @@ package financial.markets
 import core.interfaces.*
 import financial.contracts.Contract
 import physical.geolocations.Geolocation
-import social.calendars.DateRange
+import core.calendars.DateRange
 import social.reviews.Review
 import social.users.User
 import java.util.*

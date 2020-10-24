@@ -2,7 +2,7 @@ package financial.contracts
 
 import physical.estates.Estate
 import physical.harvests.Harvest
-import social.calendars.DateRange
+import core.calendars.DateRange
 import social.users.User
 import java.util.*
 

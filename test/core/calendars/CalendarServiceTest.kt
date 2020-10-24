@@ -1,8 +1,8 @@
 package test.social.calendars
 
-import social.calendars.CalendarService
-import social.calendars.CalendarTestRepository
-import social.calendars.DateRange
+import core.calendars.CalendarService
+import core.calendars.CalendarTestRepository
+import core.calendars.DateRange
 import java.util.*
 import kotlin.test.assertEquals
 

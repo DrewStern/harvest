@@ -10,8 +10,8 @@ import physical.geolocations.GeolocationService
 import physical.geolocations.GeolocationTestRepository
 import physical.harvests.HarvestService
 import physical.harvests.HarvestTestRepository
-import social.calendars.CalendarService
-import social.calendars.CalendarTestRepository
+import core.calendars.CalendarService
+import core.calendars.CalendarTestRepository
 import social.messages.MessageService
 import social.messages.MessageTestRepository
 import social.reviews.ReviewService

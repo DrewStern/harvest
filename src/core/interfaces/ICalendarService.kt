@@ -1,6 +1,6 @@
 package core.interfaces
 
-import social.calendars.DateRange
+import core.calendars.DateRange
 import java.util.*
 
 interface ICalendarService {
