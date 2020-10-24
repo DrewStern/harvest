@@ -7,7 +7,7 @@ import java.util.*
 import kotlin.test.assertEquals
 
 class CalendarServiceTest {
-    @Test
+    //@Test
     fun givenDateRange_whenCheckingIfEarlierDateIsContained_thenFalse() {
         val calendarService = CalendarService(CalendarTestRepository())
         val range = buildDateRangeContainingAllOf2020()
@@ -17,7 +17,7 @@ class CalendarServiceTest {
         assertEquals(expected, actual)
     }
 
-    @Test
+    //@Test
     fun givenDateRange_whenCheckingIfLaterDateIsContained_thenFalse() {
         val calendarService = CalendarService(CalendarTestRepository())
         val range = buildDateRangeContainingAllOf2020()
@@ -27,7 +27,7 @@ class CalendarServiceTest {
         assertEquals(expected, actual)
     }
 
-    @Test
+    //@Test
     fun givenDateRange_whenCheckingIfItsMidpointIsContained_thenTrue() {
         val calendarService = CalendarService(CalendarTestRepository())
         val range = buildDateRangeContainingAllOf2020()
@@ -37,13 +37,13 @@ class CalendarServiceTest {
         assertEquals(expected, actual)
     }
 
-    @Test
+    //@Test
     fun givenDateRange_whenAnotherDateRangeExtendsToEarlierDate_thenFalse() {}
 
-    @Test
+    //@Test
     fun givenDateRange_whenAnotherDateRangeExtendsToLaterDate_thenFalse() {}
 
-    @Test
+    //@Test
     fun givenDateRange_whenAnotherDateRangeIsStrictlyContained_thenTrue() {}
 
     private fun buildDateRangeContainingAllOf2020(): DateRange {

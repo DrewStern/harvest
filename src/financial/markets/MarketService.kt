@@ -1,12 +1,11 @@
 package financial.markets
 
-import financial.contracts.Contract
 import core.interfaces.*
+import financial.contracts.Contract
 import physical.geolocations.Geolocation
-import social.reviews.Review
 import social.calendars.DateRange
+import social.reviews.Review
 import social.users.User
-import social.users.UserService
 import java.util.*
 
 class MarketService : IMarketService {
@@ -16,6 +15,8 @@ class MarketService : IMarketService {
     private val estateService: IEstateService
     private val calendarService: ICalendarService
     private val userService: IUserService
+    private val messageService: IMessageService
+    private val transactionService: ITransactionService
 
     constructor(
         calendarService: ICalendarService,
@@ -23,7 +24,9 @@ class MarketService : IMarketService {
         userService: IUserService,
         estateService: IEstateService,
         contractService: IContractService,
-        reviewService: IReviewService
+        reviewService: IReviewService,
+        messageService: IMessageService,
+        transactionService: ITransactionService
     ) {
         this.contractService = contractService
         this.reviewService = reviewService
@@ -31,6 +34,8 @@ class MarketService : IMarketService {
         this.estateService = estateService
         this.calendarService = calendarService
         this.userService = userService
+        this.messageService = messageService
+        this.transactionService = transactionService
     }
 
     override fun createContract(contract: Contract) {

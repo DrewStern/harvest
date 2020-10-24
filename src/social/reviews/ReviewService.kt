@@ -1,12 +1,13 @@
 package social.reviews
 
+import core.interfaces.IRepository
 import financial.contracts.Contract
 import core.interfaces.IReviewService
 
 class ReviewService: IReviewService {
-    private val repository: ReviewRepository
+    private val repository: IRepository<Review>
 
-    constructor(reviewRepository: ReviewRepository) {
+    constructor(reviewRepository: IRepository<Review>) {
         repository = reviewRepository
     }
 

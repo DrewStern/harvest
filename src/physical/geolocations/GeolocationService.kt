@@ -1,12 +1,13 @@
 package physical.geolocations
 
 import core.interfaces.IGeolocationService
+import core.interfaces.IRepository
 import social.users.User
 
 class GeolocationService: IGeolocationService {
-    private val repository: GeolocationRepository
+    private val repository: IRepository<Geolocation>
     
-    constructor(repository: GeolocationRepository) {
+    constructor(repository: IRepository<Geolocation>) {
         this.repository = repository
     }
 

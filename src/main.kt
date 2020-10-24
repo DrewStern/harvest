@@ -1,57 +1,40 @@
 import financial.contracts.ContractRepository
 import financial.contracts.ContractService
+import financial.markets.MarketService
+import financial.transactions.TransactionRepository
+import financial.transactions.TransactionService
 import physical.estates.EstateRepository
 import physical.estates.EstateService
 import physical.geolocations.GeolocationRepository
-import physical.harvests.HarvestRepository
 import physical.geolocations.GeolocationService
-import financial.markets.MarketService
-import social.reviews.ReviewService
+import physical.harvests.HarvestRepository
 import physical.harvests.HarvestService
+import social.calendars.CalendarRepository
+import social.calendars.CalendarService
 import social.messages.MessageRepository
 import social.messages.MessageService
 import social.reviews.ReviewRepository
-import social.calendars.CalendarService
-import financial.transactions.TransactionRepository
-import financial.transactions.TransactionService
-import social.calendars.CalendarRepository
+import social.reviews.ReviewService
 import social.users.UserRepository
 import social.users.UserService
-import java.sql.Date
-import java.time.LocalDate
 
 fun main() {
-    // TODO: DI done right using some fancy technology
-    val calendarService = CalendarService(CalendarRepository())
+    // physical packages
     val geolocationService = GeolocationService(GeolocationRepository())
-
-    val userService = UserService(UserRepository())
     val estateService = EstateService(EstateRepository())
     val harvestService = HarvestService(HarvestRepository())
 
-    val contractService = ContractService(
-        ContractRepository(),
-        estateService,
-        harvestService
-    )
-    val transactionService = TransactionService(TransactionRepository())
-    
+    // social packages
+    val userService = UserService(UserRepository())
+    val calendarService = CalendarService(CalendarRepository())
     val messageService = MessageService(MessageRepository())
     val reviewService = ReviewService(ReviewRepository())
 
-    val marketService = MarketService(
-        calendarService,
-        geolocationService,
-        userService,
-        estateService,
-        contractService,
-        reviewService
-    )
+    // financial packages
+    val contractService = ContractService(ContractRepository(), estateService, harvestService)
+    val transactionService = TransactionService(TransactionRepository())
 
-    // TODO: move this to a test package
-    val fakeStartDate = Date.valueOf(LocalDate.now().minusYears(1))
-    val fakeEndDate = Date.valueOf(LocalDate.now().plusYears(1))
-    marketService.findOpenContractsDuringDateRange(fakeStartDate, fakeEndDate)
+    val marketService = MarketService(calendarService, geolocationService, userService, estateService, contractService, reviewService, messageService, transactionService)
 
     print("hello world")
 }

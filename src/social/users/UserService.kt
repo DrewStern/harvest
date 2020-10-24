@@ -1,12 +1,13 @@
 package social.users
 
+import core.interfaces.IRepository
 import physical.geolocations.Geolocation
 import core.interfaces.IUserService
 
 class UserService: IUserService {
-    private val repository: UserRepository
+    private val repository: IRepository<User>
 
-    constructor(repository: UserRepository) {
+    constructor(repository: IRepository<User>) {
         this.repository = repository
     }
 

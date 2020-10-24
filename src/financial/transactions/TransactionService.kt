@@ -1,11 +1,12 @@
 package financial.transactions
 
+import core.interfaces.IRepository
 import core.interfaces.ITransactionService
 
 class TransactionService: ITransactionService {
-    private val repository: TransactionRepository
+    private val repository: IRepository<Transaction>
 
-    constructor(repository: TransactionRepository) {
+    constructor(repository: IRepository<Transaction>) {
         this.repository = repository
     }
 
