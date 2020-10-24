@@ -1,18 +1,19 @@
 package contracts.tests
 
-import contracts.Contract
-import kotlin.test.Test
-import kotlin.test.assertEquals
+import financial.contracts.ContractService
+import financial.contracts.ContractTestRepository
+import physical.estates.EstateService
+import physical.estates.EstateTestRepository
+import physical.harvests.HarvestService
+import physical.harvests.HarvestTestRepository
 
 class ContractServiceTest {
 
     @Test
     fun givenEmptyRepository_whenContractsAreQueried_thenNothingIsFound() {
-        val given = ConstractService(EmptyContractRepository())
-    }
-
-    private fun EmptyContractRepository() {
-
+        val fakeEstateService = EstateService(EstateTestRepository())
+        val fakeHarvestService = HarvestService(HarvestTestRepository())
+        val given = ContractService(ContractTestRepository(), fakeEstateService, fakeHarvestService)
     }
 
     @Test

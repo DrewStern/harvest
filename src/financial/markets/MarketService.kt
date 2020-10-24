@@ -20,7 +20,7 @@ class MarketService : IMarketService {
     constructor(
         calendarService: ICalendarService,
         geolocationService: IGeolocationService,
-        userService: UserService,
+        userService: IUserService,
         estateService: IEstateService,
         contractService: IContractService,
         reviewService: IReviewService

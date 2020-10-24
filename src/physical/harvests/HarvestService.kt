@@ -1,11 +1,12 @@
 package physical.harvests
 
 import core.interfaces.IHarvestService
+import core.interfaces.IRepository
 
 class HarvestService: IHarvestService {
-    private val repository: HarvestRepository
+    private val repository: IRepository<Harvest>
 
-    constructor(repository: HarvestRepository) {
+    constructor(repository: IRepository<Harvest>) {
         this.repository = repository
     }
 

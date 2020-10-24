@@ -15,7 +15,7 @@ data class Contract(
     val estate: Estate,
     val harvest: Harvest,
 
-    val stage: ContractStage,
+    var stage: ContractStage,
     val posted: Date,
     val closed: Date,
     val accepted: Date,

@@ -1,19 +1,21 @@
 package financial.contracts
 
-import physical.estates.Estate
-import physical.estates.EstateService
-import physical.harvests.HarvestService
 import core.interfaces.IContractService
+import core.interfaces.IEstateService
+import core.interfaces.IHarvestService
+import core.interfaces.IRepository
+import physical.estates.Estate
+import social.calendars.DateRange
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.util.*
 
 class ContractService: IContractService {
-    private val repository: ContractRepository
-    private val estateService: EstateService
-    private val harvestService: HarvestService
+    private val repository: IRepository<Contract>
+    private val estateService: IEstateService
+    private val harvestService: IHarvestService
 
-    constructor(repository: ContractRepository, estateService: EstateService, harvestService: HarvestService) {
+    constructor(repository: IRepository<Contract>, estateService: IEstateService, harvestService: IHarvestService) {
         this.repository = repository
         this.estateService = estateService
         this.harvestService = harvestService
@@ -29,23 +31,36 @@ class ContractService: IContractService {
 
     override fun postContract(contract: Contract) {
         if (canBePosted(contract)) {
-            repository.save(contract, ContractStage.Posted)
+            var postedContract = contract
+            postedContract.stage = ContractStage.Posted
+            repository.save(contract)
         }
     }
 
     // TODO: need to check that the contract is still open
     override fun acceptContract(contract: Contract) {
         if (canBeAccepted(contract)) {
-            repository.save(contract, ContractStage.Accepted)
+            var acceptedContract = contract
+            acceptedContract.stage = ContractStage.Accepted
+            repository.save(acceptedContract)
         }
     }
 
     // TODO: need to check that the contract is still open
     override fun rescindContract(contract: Contract) {
         if (canBeRescinded(contract)) {
-            repository.save(contract, ContractStage.Rescinded)
+            var rescindedContract = contract
+            rescindedContract.stage = ContractStage.Rescinded
+            repository.save(rescindedContract)
         }
     }
+
+//    private fun updateContractDateRange(contract: Contract): Contract {
+//        var updatedContract = contract.copy()
+//        updatedContract.fulfillment.start = contract.fulfillment.end
+//        updatedContract.fulfillment.end = contract.fulfillment.start
+//        return updatedContract
+//    }
 
     fun isContractOpen(contract: Contract): Boolean {
         return !isClosedOrExpired(contract)
@@ -63,15 +78,20 @@ class ContractService: IContractService {
     }
 
     private fun canBeAccepted(contract: Contract): Boolean {
-        return validate(contract) && !areBuyerAndSellerIdentical(contract) && isContractInStage(contract,
-            ContractStage.Posted
-        )
+        return validate(contract) &&
+               isOrderedCorrectly(contract.fulfillment) &&
+               !areBuyerAndSellerIdentical(contract) &&
+               isContractInStage(contract, ContractStage.Posted)
     }
 
     private fun canBeRescinded(contract: Contract): Boolean {
         return validate(contract) && areBuyerAndSellerIdentical(contract) && isContractInStage(contract,
             ContractStage.Posted
         )
+    }
+
+    private fun isOrderedCorrectly(fulfillment: DateRange): Boolean {
+        return fulfillment.start.before(fulfillment.end)
     }
 
     private fun isContractInStage(contract: Contract, stage: ContractStage): Boolean {
