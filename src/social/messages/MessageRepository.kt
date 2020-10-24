@@ -1,8 +1,8 @@
 package social.messages
 
-import bases.Repository
+import core.interfaces.IRepository
 
-class MessageRepository: Repository<Message>() {
+class MessageRepository: IRepository<Message> {
     override fun find(): List<Message> {
         TODO("Not yet implemented")
     }

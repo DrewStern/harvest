@@ -1,14 +1,14 @@
 package physical.estates
 
-import bases.Repository
+import core.interfaces.IRepository
 
-class EstateRepository: Repository<Estate>() {
+class EstateRepository: IRepository<Estate> {
     override fun find(): List<Estate> {
         return getFakeEstates()
     }
 
     override fun find(id: Int): Estate {
-        return getFakeEstates().first()
+        return getFakeEstates().first { estate -> estate.id.equals(id) }
     }
 
     override fun save(item: Estate): Boolean {

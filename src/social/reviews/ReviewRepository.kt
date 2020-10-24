@@ -1,8 +1,8 @@
 package social.reviews
 
-import bases.Repository
+import core.interfaces.IRepository
 
-class ReviewRepository: Repository<Review>() {
+class ReviewRepository: IRepository<Review> {
     override fun find(): List<Review> {
         TODO("Not yet implemented")
     }

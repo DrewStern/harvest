@@ -1,7 +1,7 @@
 package social.reviews
 
 import financial.contracts.Contract
-import interfaces.IReviewService
+import core.interfaces.IReviewService
 
 class ReviewService: IReviewService {
     private val repository: ReviewRepository

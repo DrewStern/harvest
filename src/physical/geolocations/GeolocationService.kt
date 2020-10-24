@@ -1,6 +1,6 @@
 package physical.geolocations
 
-import interfaces.IGeolocationService
+import core.interfaces.IGeolocationService
 import social.users.User
 
 class GeolocationService: IGeolocationService {

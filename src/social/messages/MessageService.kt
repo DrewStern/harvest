@@ -1,6 +1,6 @@
 package social.messages
 
-import interfaces.IMessageService
+import core.interfaces.IMessageService
 
 class MessageService: IMessageService {
     val repository: MessageRepository

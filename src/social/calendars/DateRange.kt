@@ -1,4 +1,4 @@
-package calendars
+package social.calendars
 
 import java.util.*
 

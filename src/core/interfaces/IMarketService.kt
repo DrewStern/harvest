@@ -1,4 +1,4 @@
-package interfaces
+package core.interfaces
 
 import financial.contracts.Contract
 import social.reviews.Review

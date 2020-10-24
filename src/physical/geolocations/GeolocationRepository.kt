@@ -1,8 +1,8 @@
 package physical.geolocations
 
-import bases.Repository
+import core.interfaces.IRepository
 
-class GeolocationRepository: Repository<Geolocation>() {
+class GeolocationRepository: IRepository<Geolocation> {
     override fun find(): List<Geolocation> {
         return getFakeGeolocations()
     }

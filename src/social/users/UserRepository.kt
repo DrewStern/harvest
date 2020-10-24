@@ -1,8 +1,8 @@
 package social.users
 
-import bases.Repository
+import core.interfaces.IRepository
 
-class UserRepository: Repository<User>() {
+class UserRepository: IRepository<User> {
     override fun find(): List<User> {
         TODO("Not yet implemented")
     }

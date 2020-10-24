@@ -3,7 +3,7 @@ package financial.contracts
 import physical.estates.Estate
 import physical.estates.EstateService
 import physical.harvests.HarvestService
-import interfaces.IContractService
+import core.interfaces.IContractService
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.util.*

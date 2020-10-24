@@ -1,5 +1,6 @@
-package interfaces
+package core.interfaces
 
+import physical.geolocations.Geolocation
 import social.users.User
 
 interface IUserService {
@@ -11,4 +12,5 @@ interface IUserService {
 //    fun deleteUser(user: User)
 //
 //    fun postClaimOfLandOwnership(land: Land)
+    fun getGeolocation(user: User): Geolocation
 }

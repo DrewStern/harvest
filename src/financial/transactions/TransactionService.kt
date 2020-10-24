@@ -1,6 +1,6 @@
 package financial.transactions
 
-import interfaces.ITransactionService
+import core.interfaces.ITransactionService
 
 class TransactionService: ITransactionService {
     private val repository: TransactionRepository

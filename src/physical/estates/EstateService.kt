@@ -1,12 +1,14 @@
 package physical.estates
 
-import interfaces.IEstateService
+import core.interfaces.IEstateService
+import core.interfaces.IRepository
 import social.users.User
 
 class EstateService: IEstateService {
-    private val repository: EstateRepository
+    // TODO: this needs to be refactored to be an IRepository<Estate>
+    private val repository: IRepository<Estate>
 
-    constructor(repository: EstateRepository) {
+    constructor(repository: IRepository<Estate>) {
         this.repository = repository
     }
 
@@ -22,7 +24,17 @@ class EstateService: IEstateService {
         TODO("Not yet implemented")
     }
 
-    override fun postOwnershipOfEstate(user: User, estate: Estate) {
-        TODO("Not yet implemented")
+    override fun postClaimToEstate(estate: Estate) {
+        if (canClaimEstate(estate)) {
+            repository.save(estate)
+        }
+    }
+
+    private fun canClaimEstate(estate: Estate): Boolean {
+        return true
+    }
+
+    private fun validate(): Boolean {
+        return true
     }
 }

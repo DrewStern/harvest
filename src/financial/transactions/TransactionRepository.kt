@@ -1,8 +1,8 @@
 package financial.transactions
 
-import bases.Repository
+import core.interfaces.IRepository
 
-class TransactionRepository: Repository<Transaction>() {
+class TransactionRepository: IRepository<Transaction> {
     override fun find(): List<Transaction> {
         TODO("Not yet implemented")
     }

@@ -10,4 +10,5 @@ data class Estate(
     val bounds: List<Geolocation>,
     // physical size, as measured in km^2
     val magnitude: Long
+    // TODO: may want to do something like soil type, forestry, etc
 )

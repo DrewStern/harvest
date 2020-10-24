@@ -1,4 +1,4 @@
-package interfaces
+package core.interfaces
 
 import physical.estates.Estate
 import social.users.User
@@ -11,5 +11,5 @@ interface IEstateService {
 
     fun getOwnerOfEstate(estate: Estate): User
 
-    fun postOwnershipOfEstate(user: User, estate: Estate)
+    fun postClaimToEstate(estate: Estate)
 }

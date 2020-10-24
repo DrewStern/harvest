@@ -1,8 +1,8 @@
 package physical.harvests
 
-import bases.Repository
+import core.interfaces.IRepository
 
-class HarvestRepository: Repository<Harvest>() {
+class HarvestRepository: IRepository<Harvest> {
     override fun find(): List<Harvest> {
         TODO("Not yet implemented")
     }

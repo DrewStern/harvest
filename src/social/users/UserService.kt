@@ -1,7 +1,7 @@
 package social.users
 
 import physical.geolocations.Geolocation
-import interfaces.IUserService
+import core.interfaces.IUserService
 
 class UserService: IUserService {
     private val repository: UserRepository
@@ -14,7 +14,7 @@ class UserService: IUserService {
         return repository.find()
     }
 
-    fun getGeolocation(user: User): Geolocation {
+    override fun getGeolocation(user: User): Geolocation {
         return getFakeGeolocation()
     }
 

@@ -1,11 +1,10 @@
 package financial.markets
 
 import financial.contracts.Contract
-import interfaces.*
+import core.interfaces.*
 import physical.geolocations.Geolocation
 import social.reviews.Review
-import calendars.DateRange
-import calendars.CalendarService
+import social.calendars.DateRange
 import social.users.User
 import social.users.UserService
 import java.util.*
@@ -15,11 +14,11 @@ class MarketService : IMarketService {
     private val reviewService: IReviewService
     private val geolocationService: IGeolocationService
     private val estateService: IEstateService
-    private val calendarService: CalendarService
-    private val userService: UserService
+    private val calendarService: ICalendarService
+    private val userService: IUserService
 
     constructor(
-        calendarService: CalendarService,
+        calendarService: ICalendarService,
         geolocationService: IGeolocationService,
         userService: UserService,
         estateService: IEstateService,

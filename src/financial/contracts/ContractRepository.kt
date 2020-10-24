@@ -4,13 +4,13 @@ import physical.estates.Estate
 import physical.harvests.Harvest
 import physical.harvests.HarvestType
 import physical.geolocations.Geolocation
-import bases.Repository
-import calendars.DateRange
+import core.interfaces.IRepository
+import social.calendars.DateRange
 import social.users.Privilege
 import social.users.User
 import java.util.*
 
-class ContractRepository: Repository<Contract>() {
+class ContractRepository: IRepository<Contract> {
     override fun find(): List<Contract> {
         return mutableListOf(getFakeContract())
     }

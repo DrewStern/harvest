@@ -11,9 +11,10 @@ import physical.harvests.HarvestService
 import social.messages.MessageRepository
 import social.messages.MessageService
 import social.reviews.ReviewRepository
-import calendars.CalendarService
+import social.calendars.CalendarService
 import financial.transactions.TransactionRepository
 import financial.transactions.TransactionService
+import social.calendars.CalendarRepository
 import social.users.UserRepository
 import social.users.UserService
 import java.sql.Date
@@ -21,13 +22,12 @@ import java.time.LocalDate
 
 fun main() {
     // TODO: DI done right using some fancy technology
-    val calendarService = CalendarService()
+    val calendarService = CalendarService(CalendarRepository())
     val geolocationService = GeolocationService(GeolocationRepository())
 
     val userService = UserService(UserRepository())
     val estateService = EstateService(EstateRepository())
-    val harvestService =
-        HarvestService(HarvestRepository())
+    val harvestService = HarvestService(HarvestRepository())
 
     val contractService = ContractService(
         ContractRepository(),

@@ -1,6 +1,6 @@
 package physical.harvests
 
-import interfaces.IHarvestService
+import core.interfaces.IHarvestService
 
 class HarvestService: IHarvestService {
     private val repository: HarvestRepository

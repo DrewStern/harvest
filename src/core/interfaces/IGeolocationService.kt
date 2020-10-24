@@ -1,4 +1,4 @@
-package interfaces
+package core.interfaces
 
 import physical.geolocations.Geolocation
 import social.users.User
