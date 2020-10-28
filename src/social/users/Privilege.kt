@@ -5,5 +5,6 @@ enum class Privilege {
     Admin,
     Consumer,
     Guest,
-    Provider
+    Provider,
+    System
 }

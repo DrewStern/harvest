@@ -1,3 +1,5 @@
+import core.calendars.CalendarRepository
+import core.calendars.CalendarService
 import financial.contracts.ContractRepository
 import financial.contracts.ContractService
 import financial.markets.MarketService
@@ -9,8 +11,6 @@ import physical.geolocations.GeolocationRepository
 import physical.geolocations.GeolocationService
 import physical.harvests.HarvestRepository
 import physical.harvests.HarvestService
-import core.calendars.CalendarRepository
-import core.calendars.CalendarService
 import social.messages.MessageRepository
 import social.messages.MessageService
 import social.reviews.ReviewRepository

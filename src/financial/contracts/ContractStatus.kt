@@ -1,8 +1,9 @@
 package financial.contracts
 
 // alphabetical order
-enum class ContractStage {
+enum class ContractStatus {
     Accepted,
+    Closed,
     Expired,
     Pending,
     Posted,

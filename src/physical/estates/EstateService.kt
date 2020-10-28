@@ -5,7 +5,6 @@ import core.interfaces.IRepository
 import social.users.User
 
 class EstateService: IEstateService {
-    // TODO: this needs to be refactored to be an IRepository<Estate>
     private val repository: IRepository<Estate>
 
     constructor(repository: IRepository<Estate>) {

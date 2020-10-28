@@ -31,36 +31,21 @@ class ContractService: IContractService {
 
     override fun postContract(contract: Contract) {
         if (canBePosted(contract)) {
-            var postedContract = contract
-            postedContract.stage = ContractStage.Posted
             repository.save(contract)
         }
     }
 
-    // TODO: need to check that the contract is still open
     override fun acceptContract(contract: Contract) {
         if (canBeAccepted(contract)) {
-            var acceptedContract = contract
-            acceptedContract.stage = ContractStage.Accepted
-            repository.save(acceptedContract)
+            repository.save(contract)
         }
     }
 
-    // TODO: need to check that the contract is still open
     override fun rescindContract(contract: Contract) {
         if (canBeRescinded(contract)) {
-            var rescindedContract = contract
-            rescindedContract.stage = ContractStage.Rescinded
-            repository.save(rescindedContract)
+            repository.save(contract)
         }
     }
-
-//    private fun updateContractDateRange(contract: Contract): Contract {
-//        var updatedContract = contract.copy()
-//        updatedContract.fulfillment.start = contract.fulfillment.end
-//        updatedContract.fulfillment.end = contract.fulfillment.start
-//        return updatedContract
-//    }
 
     fun isContractOpen(contract: Contract): Boolean {
         return !isClosedOrExpired(contract)
@@ -78,24 +63,24 @@ class ContractService: IContractService {
     }
 
     private fun canBeAccepted(contract: Contract): Boolean {
-        return validate(contract) &&
-               isOrderedCorrectly(contract.fulfillment) &&
-               !areBuyerAndSellerIdentical(contract) &&
-               isContractInStage(contract, ContractStage.Posted)
+        return validate(contract)
+            && isOrderedCorrectly(contract.fulfillment)
+            && !areBuyerAndSellerIdentical(contract)
+            && isContractInStage(contract, ContractStatus.Posted)
     }
 
     private fun canBeRescinded(contract: Contract): Boolean {
-        return validate(contract) && areBuyerAndSellerIdentical(contract) && isContractInStage(contract,
-            ContractStage.Posted
-        )
+        return validate(contract)
+            && areBuyerAndSellerIdentical(contract)
+            && isContractInStage(contract, ContractStatus.Posted)
     }
 
     private fun isOrderedCorrectly(fulfillment: DateRange): Boolean {
         return fulfillment.start.before(fulfillment.end)
     }
 
-    private fun isContractInStage(contract: Contract, stage: ContractStage): Boolean {
-        return contract.stage.equals(stage)
+    private fun isContractInStage(contract: Contract, status: ContractStatus): Boolean {
+        return contract.history.changes.last().status.equals(status)
     }
 
     private fun isContractBeingSoldByEstateOwner(contract: Contract, estate: Estate): Boolean {

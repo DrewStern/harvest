@@ -8,7 +8,7 @@ class GeolocationRepository: IRepository<Geolocation> {
     }
 
     override fun find(id: Int): Geolocation {
-        return find().filter { geolocation -> geolocation.id.equals(id) }.first()
+        return find().first { geolocation -> geolocation.id.equals(id) }
     }
 
     override fun save(item: Geolocation): Boolean {

@@ -12,18 +12,23 @@ import physical.harvests.HarvestService
 import physical.harvests.HarvestTestRepository
 import core.calendars.CalendarService
 import core.calendars.CalendarTestRepository
+import physical.estates.Estate
 import social.messages.MessageService
 import social.messages.MessageTestRepository
 import social.reviews.ReviewService
 import social.reviews.ReviewTestRepository
+import social.users.Privilege
+import social.users.User
 import social.users.UserService
 import social.users.UserTestRepository
 import java.sql.Date
 import java.time.LocalDate
+import java.util.*
+import kotlin.test.assertEquals
 
 class MarketServiceTest {
 //    @Test
-    fun givenSomeDateRange_whenMarketIsQueried_thenMatchingContractsShouldBeFound() {
+    fun givenSomeDateRange_whenMarketIsQueried_thenMatchingContractsAreFound() {
         // physical packages
         val geolocationService = GeolocationService(GeolocationTestRepository())
         val estateService = EstateService(EstateTestRepository())
@@ -44,7 +49,18 @@ class MarketServiceTest {
 
         val fakeStartDate = Date.valueOf(LocalDate.now().minusYears(1))
         val fakeEndDate = Date.valueOf(LocalDate.now().plusYears(1))
-        val expected =
+
+        // TODO: this is wrong - we don't expect null
+        val expected = null
         val actual = marketService.findOpenContractsDuringDateRange(fakeStartDate, fakeEndDate)
+        assertEquals(expected, actual)
+    }
+
+    fun givenSomeGeolocation_whenMarketIsQueried_thenNearbyContractsAreFound() {
+        val user = User(1, "Drew", "Stern", TimeZone.getDefault(), emptyList(), Privilege.Admin, "fake@fake.fake", "123-456-7890")
+        // TODO: this is wrong - we don't expect null
+        val expected = null
+        val actual = marketService.findOpenContractsNearby(user, 25.5)
+        assertEquals(expected, actual)
     }
 }
