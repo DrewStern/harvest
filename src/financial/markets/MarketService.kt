@@ -52,7 +52,6 @@ class MarketService : IMarketService {
 
     override fun findOpenContractsNearby(user: User, range: Long): List<Contract> {
         val userGeolocation = userService.getGeolocation(user)
-
         return findOpenContracts().filter { contract ->
             isContractWithinUsersRange(contract, userGeolocation, range) }
     }
@@ -60,7 +59,7 @@ class MarketService : IMarketService {
     override fun findOpenContractsDuringDateRange(start: Date, end: Date): List<Contract> {
         val userDateRange = DateRange(start, end)
         return findOpenContracts().filter { contract ->
-            calendarService.isStrictlyContainedInRange(contract.fulfillment, userDateRange)  }
+            calendarService.isAfterRange(contract.expiration, userDateRange)}
     }
 
     // TODO: this algorithm sucks but will get switched out for something better eventually

@@ -11,11 +11,23 @@ class CalendarService: ICalendarService {
         this.repository = repository
     }
 
-    override fun isContainedInRange(point: Date, range: DateRange): Boolean {
-        return range.start.before(point) && range.end.after(point)
+    override fun isOrderedCorrectly(range: DateRange): Boolean {
+        return range.start.before(range.end)
+    }
+
+    override fun isContainedInRange(date: Date, range: DateRange): Boolean {
+        return range.start.before(date) && range.end.after(date)
     }
 
     override fun isStrictlyContainedInRange(smaller: DateRange, larger: DateRange): Boolean {
         return isContainedInRange(smaller.start, larger) && isContainedInRange(smaller.end, larger)
+    }
+
+    override fun isBeforeRange(date: Date, range: DateRange): Boolean {
+        return isOrderedCorrectly(range) && date.before(range.start)
+    }
+
+    override fun isAfterRange(date: Date, range: DateRange): Boolean {
+        return isOrderedCorrectly(range) && date.after(range.end)
     }
 }

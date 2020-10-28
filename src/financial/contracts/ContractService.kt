@@ -1,22 +1,28 @@
 package financial.contracts
 
-import core.interfaces.IContractService
-import core.interfaces.IEstateService
-import core.interfaces.IHarvestService
-import core.interfaces.IRepository
+import core.interfaces.*
 import physical.estates.Estate
-import core.calendars.DateRange
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.util.*
 
 class ContractService: IContractService {
     private val repository: IRepository<Contract>
+    private val contractHistoryService: IContractHistoryService
+    private val calendarService: ICalendarService
     private val estateService: IEstateService
     private val harvestService: IHarvestService
 
-    constructor(repository: IRepository<Contract>, estateService: IEstateService, harvestService: IHarvestService) {
+    constructor(
+        repository: IRepository<Contract>,
+        contractHistoryService: IContractHistoryService,
+        calendarService: ICalendarService,
+        estateService: IEstateService,
+        harvestService: IHarvestService
+    ) {
         this.repository = repository
+        this.contractHistoryService = contractHistoryService
+        this.calendarService = calendarService
         this.estateService = estateService
         this.harvestService = harvestService
     }
@@ -47,14 +53,20 @@ class ContractService: IContractService {
         }
     }
 
+    override fun expireContract(contract: Contract) {
+        if (shouldBeExpired(contract)) {
+            repository.save(contract)
+        }
+    }
+
     fun isContractOpen(contract: Contract): Boolean {
-        return !isClosedOrExpired(contract)
+        return contract.history.updates.last().status == ContractStatus.Open
     }
 
     // TODO: this algorithm sucks but will get switched out for something better eventually
-    private fun isClosedOrExpired(contract: Contract): Boolean {
+    private fun shouldBeExpired(contract: Contract): Boolean {
         val now = Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC))
-        return now >= contract.closed || now >= contract.expiration
+        return now >= contract.expiration
     }
 
     private fun canBePosted(contract: Contract): Boolean {
@@ -64,23 +76,18 @@ class ContractService: IContractService {
 
     private fun canBeAccepted(contract: Contract): Boolean {
         return validate(contract)
-            && isOrderedCorrectly(contract.fulfillment)
+            && isContractInStage(contract, ContractStatus.Open)
             && !areBuyerAndSellerIdentical(contract)
-            && isContractInStage(contract, ContractStatus.Posted)
     }
 
     private fun canBeRescinded(contract: Contract): Boolean {
         return validate(contract)
+            && isContractInStage(contract, ContractStatus.Open)
             && areBuyerAndSellerIdentical(contract)
-            && isContractInStage(contract, ContractStatus.Posted)
-    }
-
-    private fun isOrderedCorrectly(fulfillment: DateRange): Boolean {
-        return fulfillment.start.before(fulfillment.end)
     }
 
     private fun isContractInStage(contract: Contract, status: ContractStatus): Boolean {
-        return contract.history.changes.last().status.equals(status)
+        return contract.history.updates.last().status.equals(status)
     }
 
     private fun isContractBeingSoldByEstateOwner(contract: Contract, estate: Estate): Boolean {
@@ -91,7 +98,10 @@ class ContractService: IContractService {
     }
 
     private fun areBuyerAndSellerIdentical(contract: Contract): Boolean {
-        return contract.buyer.id.equals(contract.seller.id)
+        val history = contractHistoryService.getHistory(contract)
+        val accepted = history.updates.last { update -> update.status.equals(ContractStatus.Accepted) }
+        val buyer = accepted.updatedBy
+        return buyer.id.equals(contract.seller.id)
     }
 
     private fun validate(contract: Contract): Boolean {

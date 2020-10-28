@@ -7,10 +7,10 @@ import java.util.*
 
 class ContractEntity: IEntity<Contract> {
     override val id: Int
-    override val item: Contract
+    override val entity: Contract
 
     val isOpen: Boolean
-        get() = isInStatus(ContractStatus.Posted)
+        get() = isInStatus(ContractStatus.Open)
 
     val isClosed: Boolean
         get() = isInStatus(ContractStatus.Closed)
@@ -18,15 +18,15 @@ class ContractEntity: IEntity<Contract> {
     val hasExpired: Boolean
         get() {
             val now = Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC))
-            return now >= item.expiration
+            return now >= entity.expiration
         }
 
     constructor(id: Int, item: Contract) {
         this.id = id
-        this.item = item
+        this.entity = item
     }
 
     fun isInStatus(status: ContractStatus): Boolean {
-        return item.history.changes.last().status == status
+        return entity.history.updates.last().status == status
     }
 }

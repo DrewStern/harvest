@@ -1,7 +1,7 @@
 package financial.markets
 
 import financial.contracts.ContractService
-import financial.contracts.ContractTestRepository
+import financial.contracts.ContractTestDataRepository
 import financial.transactions.TransactionService
 import financial.transactions.TransactionTestRepository
 import physical.estates.EstateService
@@ -12,7 +12,6 @@ import physical.harvests.HarvestService
 import physical.harvests.HarvestTestRepository
 import core.calendars.CalendarService
 import core.calendars.CalendarTestRepository
-import physical.estates.Estate
 import social.messages.MessageService
 import social.messages.MessageTestRepository
 import social.reviews.ReviewService
@@ -41,7 +40,7 @@ class MarketServiceTest {
         val reviewService = ReviewService(ReviewTestRepository())
 
         // financial packages
-        val contractService = ContractService(ContractTestRepository(), estateService, harvestService)
+        val contractService = ContractService(ContractTestDataRepository(), estateService, harvestService)
         val transactionService = TransactionService(TransactionTestRepository())
 
         val marketService = MarketService(calendarService, geolocationService, userService, estateService, contractService, reviewService, messageService, transactionService)

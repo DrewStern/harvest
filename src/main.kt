@@ -1,5 +1,7 @@
 import core.calendars.CalendarRepository
 import core.calendars.CalendarService
+import financial.contracts.ContractHistoryRepository
+import financial.contracts.ContractHistoryService
 import financial.contracts.ContractRepository
 import financial.contracts.ContractService
 import financial.markets.MarketService
@@ -31,7 +33,8 @@ fun main() {
     val reviewService = ReviewService(ReviewRepository())
 
     // financial packages
-    val contractService = ContractService(ContractRepository(), estateService, harvestService)
+    val contractHistoryService = ContractHistoryService(ContractHistoryRepository())
+    val contractService = ContractService(ContractRepository(), contractHistoryService, calendarService, estateService, harvestService)
     val transactionService = TransactionService(TransactionRepository())
 
     val marketService = MarketService(calendarService, geolocationService, userService, estateService, contractService, reviewService, messageService, transactionService)

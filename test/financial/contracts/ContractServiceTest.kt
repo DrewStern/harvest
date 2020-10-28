@@ -1,7 +1,11 @@
 package contracts.tests
 
+import core.calendars.CalendarService
+import core.calendars.CalendarTestRepository
+import financial.contracts.ContractHistoryService
+import financial.contracts.ContractHistoryTestDataRepository
 import financial.contracts.ContractService
-import financial.contracts.ContractTestRepository
+import financial.contracts.ContractTestDataRepository
 import physical.estates.EstateService
 import physical.estates.EstateTestRepository
 import physical.harvests.HarvestService
@@ -11,9 +15,11 @@ class ContractServiceTest {
 
     @Test
     fun givenEmptyRepository_whenContractsAreQueried_thenNothingIsFound() {
+        val fakeContractHistoryService = ContractHistoryService(ContractHistoryTestDataRepository())
+        val fakeCalendarService = CalendarService(CalendarTestRepository())
         val fakeEstateService = EstateService(EstateTestRepository())
         val fakeHarvestService = HarvestService(HarvestTestRepository())
-        val given = ContractService(ContractTestRepository(), fakeEstateService, fakeHarvestService)
+        val given = ContractService(ContractTestDataRepository(), fakeContractHistoryService, fakeCalendarService, fakeEstateService, fakeHarvestService)
     }
 
     @Test

@@ -10,4 +10,5 @@ interface IContractService {
     fun postContract(contract: Contract)
     fun acceptContract(contract: Contract)
     fun rescindContract(contract: Contract)
+    fun expireContract(contract: Contract)
 }

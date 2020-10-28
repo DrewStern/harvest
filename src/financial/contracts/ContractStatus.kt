@@ -5,7 +5,7 @@ enum class ContractStatus {
     Accepted,
     Closed,
     Expired,
+    Open,
     Pending,
-    Posted,
     Rescinded
 }

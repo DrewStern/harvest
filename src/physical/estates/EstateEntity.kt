@@ -4,10 +4,10 @@ import core.interfaces.IEntity
 
 class EstateEntity: IEntity<Estate> {
     override val id: Int
-    override val item: Estate
+    override val entity: Estate
 
     constructor(id: Int, item: Estate) {
         this.id = id
-        this.item = item
+        this.entity = item
     }
 }
