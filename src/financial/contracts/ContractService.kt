@@ -94,14 +94,14 @@ class ContractService: IContractService {
         val estateOwnerId = estateService.getOwnerOfEstate(estate).id
         // TODO: if estateOwnerId from above disagrees with the given estate's owner.id, then throw security violation?
         // TODO: assertEquals(estateOwnerId, estate.owner.id)
-        return contract.seller.id.equals(estateOwnerId)
+        return contract.issuer.id.equals(estateOwnerId)
     }
 
     private fun areBuyerAndSellerIdentical(contract: Contract): Boolean {
         val history = contractHistoryService.getHistory(contract)
         val accepted = history.updates.last { update -> update.status.equals(ContractStatus.Accepted) }
         val buyer = accepted.updatedBy
-        return buyer.id.equals(contract.seller.id)
+        return buyer.id.equals(contract.issuer.id)
     }
 
     private fun validate(contract: Contract): Boolean {

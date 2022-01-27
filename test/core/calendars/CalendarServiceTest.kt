@@ -7,7 +7,7 @@ import java.util.*
 import kotlin.test.assertEquals
 
 class CalendarServiceTest {
-    //@Test
+    @Test
     fun givenDateRange_whenCheckingIfEarlierDateIsContained_thenFalse() {
         val calendarService = CalendarService(CalendarTestRepository())
         val range = buildDateRangeContainingAllOf2020()

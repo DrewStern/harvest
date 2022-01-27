@@ -1,10 +1,9 @@
 package financial.markets
 
+import core.calendars.DateRange
 import core.interfaces.*
 import financial.contracts.Contract
 import physical.geolocations.Geolocation
-import core.calendars.DateRange
-import social.reviews.Review
 import social.users.User
 import java.util.*
 
@@ -36,14 +35,6 @@ class MarketService : IMarketService {
         this.userService = userService
         this.messageService = messageService
         this.transactionService = transactionService
-    }
-
-    override fun createContract(contract: Contract) {
-        contractService.postContract(contract)
-    }
-
-    override fun createReview(review: Review) {
-        reviewService.postReview(review)
     }
 
     override fun findOpenContracts(): List<Contract> {

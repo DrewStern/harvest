@@ -10,18 +10,18 @@ import social.users.User
 import java.util.*
 
 class ContractTestDataRepository: IRepository<Contract> {
-    private val data: List<Contract>
+    private val contracts: List<Contract>
 
     constructor() {
-        data = listOf(getPostedThenExpiredContract(), getPostedThenRescindedContract(), getPostedThenAcceptedContract())
+        contracts = listOf(getPostedThenExpiredContract(), getPostedThenRescindedContract(), getPostedThenAcceptedContract())
     }
 
     override fun find(): List<Contract> {
-        return data
+        return contracts
     }
 
     override fun find(id: Int): Contract {
-        return data.first { contract -> contract.details.contractId.equals(id) }
+        return contracts.first { contract -> contract.id.equals(id) }
     }
 
     override fun save(item: Contract): Boolean {
@@ -37,9 +37,9 @@ class ContractTestDataRepository: IRepository<Contract> {
         val fakeHarvest = Harvest(1, HarvestType.Deer, 2)
         val fakeExpiration = Date()
 
-        val fakeStatusChanges = getPostedThenExpiredContractHistory(fakeContractId, fakeSeller)
-        val fakeHistory = ContractHistory(fakeContractId, fakeStatusChanges)
-        return Contract(fakeContractId, fakeSeller, fakePrice, fakeEstate, fakeHarvest, fakeExpiration, fakeHistory)
+//        val fakeStatusChanges = getPostedThenExpiredContractHistory(fakeContractId, fakeSeller)
+//        val fakeHistory = ContractHistory(fakeContractId, fakeStatusChanges)
+        return Contract(fakeContractId, fakeSeller, fakePrice, fakeEstate, fakeHarvest, fakeExpiration)
     }
 
     private fun getPostedThenRescindedContract(): Contract {
@@ -51,9 +51,9 @@ class ContractTestDataRepository: IRepository<Contract> {
         val fakeHarvest = Harvest(1, HarvestType.Deer, 2)
         val fakeExpiration = Date()
 
-        val fakeStatusChanges = getPostedThenRescindedContractHistory(fakeContractId, fakeSeller)
-        val fakeHistory = ContractHistory(fakeContractId, fakeStatusChanges)
-        return Contract(fakeContractId, fakeSeller, fakePrice, fakeEstate, fakeHarvest, fakeExpiration, fakeHistory)
+//        val fakeStatusChanges = getPostedThenRescindedContractHistory(fakeContractId, fakeSeller)
+//        val fakeHistory = ContractHistory(fakeContractId, fakeStatusChanges)
+        return Contract(fakeContractId, fakeSeller, fakePrice, fakeEstate, fakeHarvest, fakeExpiration)
     }
 
     private fun getPostedThenAcceptedContract(): Contract {
@@ -66,10 +66,8 @@ class ContractTestDataRepository: IRepository<Contract> {
         val fakeExpiration = Date()
 
         val fakeBuyer = User(2, "Jon", "Bargiel", TimeZone.getDefault(), emptyList(), Privilege.Guest, "fake@fake", "123-456-7890")
-        val fakeStatusChanges = getPostedThenAcceptedContractHistory(fakeContractId, fakeSeller, fakeBuyer)
-        val fakeHistory = ContractHistory(fakeContractId, fakeStatusChanges)
-        return Contract(fakeContractId, fakeSeller, fakePrice, fakeEstate, fakeHarvest, fakeExpiration, fakeHistory)
-    }
-
+//        val fakeStatusChanges = getPostedThenAcceptedContractHistory(fakeContractId, fakeSeller, fakeBuyer)
+//        val fakeHistory = ContractHistory(fakeContractId, fakeStatusChanges)
+        return Contract(fakeContractId, fakeSeller, fakePrice, fakeEstate, fakeHarvest, fakeExpiration)
     }
 }

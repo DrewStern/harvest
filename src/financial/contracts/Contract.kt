@@ -7,7 +7,7 @@ import java.util.*
 
 data class Contract(
     val id: Int,
-    val seller: User,
+    val issuer: User,
     val price: Long, // note that kotlin already supports LongRange, but not DateTimeRange unfortunately
     val estate: Estate,
     val harvest: Harvest,
